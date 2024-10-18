@@ -23,7 +23,7 @@ mongoose.connect(mongoURI,{useNewUrlParser:true}) //요즘 형태의 주소도 �
     console.log("DB connection fail", err);
 }); 
 
-app.listen(5000, ()=>{ //프론트엔드는 주로 3000번. 백엔드는 주로 5000번을 씀. 임의로 설정 가능.
+app.listen(process.env.PORT || 5000, ()=>{ //프론트엔드는 주로 3000번. 백엔드는 주로 5000번을 씀. 임의로 설정 가능.
     console.log("server on 5000");
 });
 
