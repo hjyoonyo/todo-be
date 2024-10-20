@@ -1,6 +1,6 @@
 //기능만 모아두기
 
-const Task = require("../model/task");
+const Task = require("../model/Task");
 
 const taskController = {};
 
