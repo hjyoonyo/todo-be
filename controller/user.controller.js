@@ -28,7 +28,7 @@ userConroller.createUser = async(req,res)=>{
         res.status(200).json({status:"success"});
 
     }catch(error){
-        res.status(400).json({status:"fail", error});
+        res.status(400).json({status:"fail", message:error.message});
     }
 }
 
@@ -37,6 +37,15 @@ userConroller.loginWithEmail = async(req,res) => {
     try{
         const{email,password} = req.body;
         const user = await User.findOne({email},"-createdAt -updatedAt -__v"); //이메일을 통해 db에 저장된 유저 정보 가져오기
+
+        if(!email){
+            throw new Error("이메일을 입력하세요.");
+        }
+
+        if(!password){
+            throw new Error('패스워드를 입력하세요.');
+        }
+        
         //해당 이메일의 유저가 존재함
         if(user){
             const isMatch = bcrypt.compareSync(password, user.password);
@@ -46,9 +55,10 @@ userConroller.loginWithEmail = async(req,res) => {
                 const token = user.generateToken();
                 return res.status(200).json({status:"success", user, token});
             }
+        }else{
+            throw new Error("아이디 또는 비밀번호가 일치하지 않습니다.");            
         }
 
-        throw new Error("아이디 또는 비밀번호가 일치하지 않습니다.");
 
     }catch(error){
         res.status(400).json({status:"fail", message:error.message});
