@@ -54,6 +54,8 @@ userConroller.loginWithEmail = async(req,res) => {
                 //토큰 발행 => user model에서 생성. 토큰은 유저와 관련이 있는 정보이며 다른 곳에서 쓸 가능성이 있기 때문에 모델에서 만든다.
                 const token = user.generateToken();
                 return res.status(200).json({status:"success", user, token});
+            }else{
+                throw new Error("아이디 또는 비밀번호가 일치하지 않습니다.");
             }
         }else{
             throw new Error("아이디 또는 비밀번호가 일치하지 않습니다.");            
