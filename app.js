@@ -7,9 +7,12 @@ const indexRouter = require('./routes/index');
 require('dotenv').config();
 const app = express();
 const MONGODB_URI_PROD = process.env.MONGODB_URI_PROD;
-console.log("mongouri", MONGODB_URI_PROD);
+const REACT_APP_FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
+
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    origin: REACT_APP_FRONTEND_URL // 허용할 프론트엔드 출처
+}));
 app.use("/api",indexRouter);
 
 
